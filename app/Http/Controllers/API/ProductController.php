@@ -3,23 +3,30 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Requests\ProductRequest;   
 use App\Http\Resources\ProductCollection;
 use App\Models\Product;
 use Illuminate\Http\Response;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $products = Product::latest()->paginate(10);
-        return response()->json(new ProductCollection($products), Response::HTTP_OK);
+        return response()->json(
+            new ProductCollection($products), 
+            Response::HTTP_OK
+        );
     }
 
     public function store(ProductRequest $request)
     {
         $product = Product::create($request->validated());
+
         return response()->json([
             'status'  => true,
             'message' => 'Product created successfully',
