@@ -16,7 +16,8 @@ return new class extends Migration
         $table->string('name', 100);
         $table->decimal('price', 10, 0); /*** dari angka 2 jadi angka 0  */
         $table->text('description')->nullable();
-        $table->integer('stock')->default(0);
+        $table->integer('stock');
+        $table->foreignId(Kategori::class, 'id_kategori');
         $table->timestamps();
         });
     } 
